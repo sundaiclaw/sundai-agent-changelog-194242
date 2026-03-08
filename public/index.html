@@ -1,0 +1,15 @@
+<!doctype html><html><body style="font-family:Arial;max-width:900px;margin:40px auto;padding:0 16px">
+<h1>AgentChangelog</h1>
+<p>Turn run logs into a clean changelog and incident report.</p>
+<textarea id='t' style='width:100%;height:180px' placeholder='Paste run logs'></textarea><br>
+<button onclick='go()'>Generate Changelog</button>
+<pre id='o' style='white-space:pre-wrap;background:#f5f5f5;padding:12px'></pre>
+<script>
+async function go(){
+  const text=document.getElementById('t').value.trim();
+  if(!text) return;
+  const r=await fetch('/api/changelog',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text})});
+  const d=await r.json();
+  document.getElementById('o').textContent=JSON.stringify(d,null,2);
+}
+</script></body></html>
